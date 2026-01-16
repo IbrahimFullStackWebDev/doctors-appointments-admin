@@ -3,7 +3,15 @@
 
 * {
   font-family: Outfit, sans-serif, serif;
+  box-sizing: border-box;
 }
 body {
   background-color: aliceblue;
+}
+::-webkit-scrollbar {
+  visibility: hidden;
+}
+.active {
+  border-right: 5px solid rgba(0, 0, 255, 0.673);
+  background-color: rgb(243, 237, 237);
 }

@@ -8,3 +8,8 @@ export interface ResponseType {
   aToken: string;
   message?: string;
 }
+export interface SidebarItems {
+  path: string;
+  lable: string;
+  image: string;
+}

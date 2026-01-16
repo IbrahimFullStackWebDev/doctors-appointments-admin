@@ -8,7 +8,7 @@ const Navbar = () => {
   const { aToken, setAToken } = useAdminContext();
   return (
     aToken && (
-      <div className="w-full flex flex-row items-center justify-between px-10 py-2 border-b border-gray-300 bg-white">
+      <nav className="w-full flex flex-row items-center justify-between px-10 py-2 border-b border-gray-300 bg-white">
         <div className="flex flex-row gap-6 items-center">
           <img src={assets.admin_logo} className="w-40" alt="admin logo" />
           <p className="text-xs text-gray-500 border border-gray-300 px-2 py-1 rounded-full">
@@ -24,7 +24,7 @@ const Navbar = () => {
         >
           Logout
         </button>
-      </div>
+      </nav>
     )
   );
 };
