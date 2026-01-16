@@ -1,7 +1,7 @@
 export interface AdminContextType {
   backendUrl: string;
   aToken: string;
-  setAToken: (aToken: string) => void;
+  setAToken: (aToken: string | null) => void;
 }
 export interface ResponseType {
   success: boolean;

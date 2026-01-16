@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAdminContext } from "../context/AdminContext";
 import { toast } from "react-toastify";
 import { type ResponseType } from "../types/index.ts";
@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>();
   const navigate = useNavigate();
 
-  const { backendUrl, setAToken } = useAdminContext();
+  const { backendUrl, setAToken, aToken } = useAdminContext();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -25,6 +25,7 @@ const Login = () => {
       if (data.success) {
         setAToken(data.aToken);
         navigate("/dashboard");
+        toast.success(data.message);
       } else {
         toast.error(data.message);
       }
@@ -34,6 +35,11 @@ const Login = () => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (aToken) {
+      navigate("/dashboard");
+    }
+  });
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
