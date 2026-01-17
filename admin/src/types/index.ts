@@ -3,11 +3,7 @@ export interface AdminContextType {
   aToken: string;
   setAToken: (aToken: string | null) => void;
 }
-export interface ResponseType {
-  success: boolean;
-  aToken?: string;
-  message?: string;
-}
+
 export interface SidebarItemsType {
   path: string;
   lable: string;
@@ -25,7 +21,6 @@ export interface DoctorDataType {
   id?: string;
   name: string;
   email: string;
-  password?: string;
   speciality: string;
   degree: string;
   experience: string;
@@ -33,4 +28,10 @@ export interface DoctorDataType {
   fees: number;
   address: Address;
   image: string;
+}
+export interface ResponseType {
+  success: boolean;
+  aToken?: string;
+  message: string;
+  doctors?: DoctorDataType[];
 }
