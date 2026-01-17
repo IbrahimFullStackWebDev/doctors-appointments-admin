@@ -1,12 +1,12 @@
 import React from "react";
-import type { SidebarItems } from "../types/index.ts";
+import type { SidebarItemsType } from "../types/index.ts";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets.ts";
 import { useAdminContext } from "../context/AdminContext.tsx";
 
 const Sidebar = () => {
   const { aToken } = useAdminContext();
-  const sidbarItems: SidebarItems[] = [
+  const sidbarItems: SidebarItemsType[] = [
     { path: "/dashboard", lable: "Dashboard", image: assets.home_icon },
     {
       path: "/appointments",
@@ -18,7 +18,7 @@ const Sidebar = () => {
   ];
   return (
     aToken && (
-      <div className="w-full max-w-[100px] md:max-w-[250px] flex flex-col items-start gap-2 py-2 bg-white min-h-screen">
+      <div className="w-full max-w-[100px] md:max-w-[250px] flex flex-col items-start gap-2 py-2 bg-white   min-h-screen">
         {sidbarItems.map((item, index) => (
           <NavLink
             key={index}

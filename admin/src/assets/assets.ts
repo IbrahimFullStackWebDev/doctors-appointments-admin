@@ -27,3 +27,30 @@ export const assets = {
   appointments_icon,
   earning_icon,
 };
+
+export const specialityData = [
+  {
+    id: 1,
+    speciality: "General physician",
+  },
+  {
+    id: 2,
+    speciality: "Gynecologist",
+  },
+  {
+    id: 3,
+    speciality: "Dermatologist",
+  },
+  {
+    id: 4,
+    speciality: "Pediatricians",
+  },
+  {
+    id: 5,
+    speciality: "Neurologist",
+  },
+  {
+    id: 6,
+    speciality: "Gastroenterologist",
+  },
+];

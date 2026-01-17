@@ -5,11 +5,32 @@ export interface AdminContextType {
 }
 export interface ResponseType {
   success: boolean;
-  aToken: string;
+  aToken?: string;
   message?: string;
 }
-export interface SidebarItems {
+export interface SidebarItemsType {
   path: string;
   lable: string;
+  image: string;
+}
+export interface SpecialityDataType {
+  id: number;
+  speciality: string;
+}
+interface Address {
+  line1: string;
+  line2: string;
+}
+export interface DoctorDataType {
+  id?: string;
+  name: string;
+  email: string;
+  password?: string;
+  speciality: string;
+  degree: string;
+  experience: string;
+  about: string;
+  fees: number;
+  address: Address;
   image: string;
 }

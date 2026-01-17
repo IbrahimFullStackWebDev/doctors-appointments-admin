@@ -20,7 +20,7 @@ const Navbar = () => {
             setAToken(null);
             navigate("/");
           }}
-          className="bg-blue-500 px-14 py-3 rounded-full text-white transition-all hover:bg-blue-700 duration-300 cursor-pointer"
+          className="bg-blue-500 text-sm px-14 py-3 rounded-full text-white transition-all hover:bg-blue-700 duration-300 cursor-pointer"
         >
           Logout
         </button>

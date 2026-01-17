@@ -10,10 +10,10 @@ import Doctors from "./pages/admin/Doctors";
 
 function App() {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center overflow-hidden">
       <ToastContainer />
       <Navbar />
-      <div className="w-full flex flex-row items-start">
+      <div className="w-full flex flex-row items-start gap-6">
         <Sidebar />
         <Routes>
           <Route path="/" element={<Login />} />
