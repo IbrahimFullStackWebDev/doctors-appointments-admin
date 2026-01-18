@@ -8,6 +8,25 @@ const Doctors = () => {
   const [doctors, setDoctors] = useState<DoctorDataType[]>([]);
   const { backendUrl, aToken } = useAdminContext();
 
+  const changeAvailability = async (doctorId: number, available: boolean) => {
+    try {
+      const { data } = await axios.put<ResponseType>(
+        `${backendUrl}/api/admin/change-availability`,
+        { doctorId, available },
+        { headers: { aToken } },
+      );
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      const err = error as Error;
+      toast.error(err.message);
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getDoctors = async () => {
       try {
@@ -29,7 +48,7 @@ const Doctors = () => {
       }
     };
     getDoctors();
-  }, []);
+  }, [changeAvailability]);
   return (
     <div className="w-full flex flex-col items-start gap-10 mt-5">
       <h2 className="text-2xl font-medium text-gray-700">Doctors List</h2>
@@ -51,7 +70,10 @@ const Doctors = () => {
                   <input
                     id="Availability"
                     type="checkbox"
-                    className="bg-green-500"
+                    checked={item.available}
+                    onChange={() =>
+                      changeAvailability(item.id as number, !item.available)
+                    }
                   />
                   <label
                     htmlFor="Availability"

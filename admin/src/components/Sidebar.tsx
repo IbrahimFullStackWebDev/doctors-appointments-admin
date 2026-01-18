@@ -14,7 +14,7 @@ const Sidebar = () => {
       image: assets.appointment_icon,
     },
     { path: "/add-doctor", lable: "Add a Doctor", image: assets.add_icon },
-    { path: "/doctors", lable: "Doctors", image: assets.people_icon },
+    { path: "/doctors", lable: "Doctors List", image: assets.people_icon },
   ];
   return (
     aToken && (

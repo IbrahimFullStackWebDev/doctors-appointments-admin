@@ -18,13 +18,14 @@ interface Address {
   line2: string;
 }
 export interface DoctorDataType {
-  id?: string;
+  id?: number;
   name: string;
   email: string;
   speciality: string;
   degree: string;
   experience: string;
   about: string;
+  available?: boolean;
   fees: number;
   address: Address;
   image: string;
