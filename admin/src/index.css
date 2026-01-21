@@ -5,9 +5,6 @@
   font-family: Outfit, sans-serif, serif;
   box-sizing: border-box;
 }
-body {
-  background-color: aliceblue;
-}
 ::-webkit-scrollbar {
   visibility: hidden;
 }

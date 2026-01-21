@@ -4,6 +4,7 @@ import { useAdminContext } from "../context/AdminContext";
 import { toast } from "react-toastify";
 import { type ResponseType } from "../types/index.ts";
 import { useNavigate } from "react-router-dom";
+import { isTokenExpired } from "../utils/IsTokenExpired.ts";
 
 const Login = () => {
   const [status, setStatus] = useState<string>("admin");
@@ -20,10 +21,10 @@ const Login = () => {
         {
           email,
           password,
-        }
+        },
       );
       if (data.success) {
-        setAToken(data.aToken);
+        setAToken(data.aToken as string);
         navigate("/dashboard");
         toast.success(data.message);
       } else {
@@ -36,8 +37,9 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    if (aToken) {
+    if (aToken && isTokenExpired(aToken)) {
       navigate("/dashboard");
+      toast.warn("Your session has expired");
     }
   });
   return (

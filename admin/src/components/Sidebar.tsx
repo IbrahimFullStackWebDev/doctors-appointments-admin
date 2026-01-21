@@ -18,7 +18,7 @@ const Sidebar = () => {
   ];
   return (
     aToken && (
-      <div className="w-full max-w-[100px] md:max-w-[250px] flex flex-col items-start gap-2 py-2 bg-white   min-h-screen">
+      <div className="w-full max-w-[100px] md:max-w-[250px] flex flex-col items-start gap-2 py-2 bg-white   min-h-screen border-r border-gray-300">
         {sidbarItems.map((item, index) => (
           <NavLink
             key={index}
