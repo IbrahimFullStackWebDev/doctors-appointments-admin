@@ -7,10 +7,14 @@ import Sidebar from "./components/Sidebar";
 import Appointments from "./pages/admin/Appointments";
 import AddDoctor from "./pages/admin/AddDoctor";
 import Doctors from "./pages/admin/Doctors";
+import { useAppContext } from "./context/AppContext";
 
 function App() {
+  const { aToken } = useAppContext();
   return (
-    <div className="w-full flex flex-col items-center overflow-hidden">
+    <div
+      className={`w-full flex flex-col items-center overflow-hidden ${aToken ? "bg-blue-50" : "bg-white"}`}
+    >
       <ToastContainer />
       <Navbar />
       <div className="w-full flex flex-row items-start gap-6">

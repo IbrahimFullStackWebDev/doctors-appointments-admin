@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import type { DoctorDataType, ResponseType } from "../../types";
 import axios from "axios";
-import { useAdminContext } from "../../context/AdminContext";
+import { useAppContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState<DoctorDataType[]>([]);
-  const { backendUrl, aToken } = useAdminContext();
+  const { backendUrl, aToken } = useAppContext();
 
   const changeAvailability = async (doctorId: number, available: boolean) => {
     try {
@@ -51,9 +51,9 @@ const Doctors = () => {
   }, [changeAvailability]);
   return (
     <div className="w-full flex flex-col items-start gap-10 mt-5">
-      <h2 className="text-2xl font-medium text-gray-700">Doctors List</h2>
+      <h2 className="text-2xl font-medium">Doctors List</h2>
 
-      <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6 overflow-y-scroll h-screen">
+      <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6 overflow-y-scroll h-screen p-4">
         {doctors &&
           doctors.map((item) => (
             <div

@@ -1,11 +1,11 @@
 import React from "react";
 import { assets } from "../assets/assets.ts";
-import { useAdminContext } from "../context/AdminContext";
+import { useAppContext } from "../context/AppContext.tsx";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { aToken, setAToken } = useAdminContext();
+  const { aToken, setAToken } = useAppContext();
   return (
     aToken && (
       <nav className="w-full flex flex-row items-center justify-between px-10 py-2 border-b border-gray-300 bg-white">

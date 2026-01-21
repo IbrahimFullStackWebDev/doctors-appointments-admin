@@ -4,7 +4,7 @@ import { specialityData } from "../../assets/assets";
 import { type ResponseType, type SpecialityDataType } from "../../types";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useAdminContext } from "../../context/AdminContext";
+import { useAppContext } from "../../context/AppContext";
 
 const AddDoctor = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -18,7 +18,7 @@ const AddDoctor = () => {
   const [degree, setDegree] = useState<string>("");
   const [addressLine1, setAddressLine1] = useState<string>("");
   const [addressLine2, setAddressLine2] = useState<string>("");
-  const { backendUrl, aToken } = useAdminContext();
+  const { backendUrl, aToken } = useAppContext();
 
   console.log(image);
 
@@ -70,7 +70,7 @@ const AddDoctor = () => {
       <h1 className="text-lg font-semibold">Add Doctor</h1>
       <form
         onSubmit={(e) => submitHandler(e)}
-        className="w-full xl:w-2/3 bg-white flex flex-col gap-4 items-start p-8 rounded-md max-h-[80vh] overflow-y-scroll"
+        className="w-full xl:w-2/3 bg-white flex flex-col gap-4 items-start p-8 rounded-md max-h-[80vh] overflow-y-scroll border border-gray-300"
       >
         <div className="flex flex-row items-center gap-4">
           <label htmlFor="image">

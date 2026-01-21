@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAdminContext } from "../context/AdminContext";
+import { useAppContext } from "../context/AppContext.tsx";
 import { toast } from "react-toastify";
 import { type ResponseType } from "../types/index.ts";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>();
   const navigate = useNavigate();
 
-  const { backendUrl, setAToken, aToken } = useAdminContext();
+  const { backendUrl, setAToken, aToken } = useAppContext();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -39,6 +39,7 @@ const Login = () => {
   useEffect(() => {
     if (aToken && isTokenExpired(aToken)) {
       navigate("/dashboard");
+    } else {
       toast.warn("Your session has expired");
     }
   });

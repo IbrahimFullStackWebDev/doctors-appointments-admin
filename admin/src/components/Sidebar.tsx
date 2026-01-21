@@ -2,10 +2,10 @@ import React from "react";
 import type { SidebarItemsType } from "../types/index.ts";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets.ts";
-import { useAdminContext } from "../context/AdminContext.tsx";
+import { useAppContext } from "../context/AppContext.tsx";
 
 const Sidebar = () => {
-  const { aToken } = useAdminContext();
+  const { aToken } = useAppContext();
   const sidbarItems: SidebarItemsType[] = [
     { path: "/dashboard", lable: "Dashboard", image: assets.home_icon },
     {
