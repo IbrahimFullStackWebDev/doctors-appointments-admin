@@ -15,7 +15,6 @@ import { toast } from "react-toastify";
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
-  const currency: string = "$";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [appointmentsForAdmin, setAppointmentsForAdmin] = useState<
     AppointmentsType[]
@@ -53,7 +52,6 @@ export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
     backendUrl,
     aToken,
     setAToken,
-    currency,
     appointmentsForAdmin,
     setAppointmentsForAdmin,
   };

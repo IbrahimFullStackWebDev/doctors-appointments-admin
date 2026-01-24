@@ -24,7 +24,13 @@ export const DoctorContextProvider = ({
   const [appointmentsForDoctor, setAppointmentsForDoctor] = useState<
     AppointmentsType[]
   >([]);
-  const [doctorInfo, setDoctorInfo] = useState<DoctorDataType>();
+  const [doctorInfo, setDoctorInfo] = useState<DoctorDataType | null>(
+    localStorage.getItem("doctorInfo")
+      ? (JSON.parse(
+          localStorage.getItem("doctorInfo") as string,
+        ) as DoctorDataType)
+      : null,
+  );
 
   const [dToken, setDToken] = useState<string>(
     localStorage.getItem("dToken") || "",
