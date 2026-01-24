@@ -1,30 +1,50 @@
 import { ToastContainer } from "react-toastify";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import Dashboard from "./pages/admin/Dashboard";
+import AdminDashboard from "./pages/admin/Dashboard";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import Appointments from "./pages/admin/Appointments";
+import AdminAppointmentsPage from "./pages/admin/Appointments";
 import AddDoctor from "./pages/admin/AddDoctor";
 import Doctors from "./pages/admin/Doctors";
-import { useAppContext } from "./context/AppContext";
+import { useAdminContext } from "./context/AdminContext";
+import { useDoctorContext } from "./context/DoctorContext";
+import DoctorDashboard from "./pages/Doctor/Dashboard";
+import DoctorAppointments from "./pages/Doctor/Appointments";
+import Profile from "./pages/Doctor/Profile";
 
 function App() {
-  const { aToken } = useAppContext();
+  const { aToken } = useAdminContext();
+  const { dToken } = useDoctorContext();
   return (
     <div
-      className={`w-full flex flex-col items-center overflow-hidden ${aToken ? "bg-blue-50" : "bg-white"}`}
+      className={`w-[100vw] h-[100vh]  flex flex-col items-center overflow-y-hidden ${aToken || dToken ? "bg-blue-50" : "bg-white"}`}
     >
       <ToastContainer />
+
       <Navbar />
-      <div className="w-full flex flex-row items-start gap-6">
+      <div className="w-full overflow-auto flex flex-row items-start gap-2 md:gap-6">
         <Sidebar />
+
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/appointments" element={<Appointments />} />
-          <Route path="/add-doctor" element={<AddDoctor />} />
-          <Route path="/doctors" element={<Doctors />} />
+
+          {aToken && (
+            <>
+              <Route path="/dashboard" element={<AdminDashboard />} />
+              <Route path="/appointments" element={<AdminAppointmentsPage />} />
+              <Route path="/add-doctor" element={<AddDoctor />} />
+              <Route path="/doctors" element={<Doctors />} />
+            </>
+          )}
+
+          {dToken && (
+            <>
+              <Route path="/dashboard" element={<DoctorDashboard />} />
+              <Route path="/appointments" element={<DoctorAppointments />} />
+              <Route path="/profile" element={<Profile />} />
+            </>
+          )}
         </Routes>
       </div>
     </div>

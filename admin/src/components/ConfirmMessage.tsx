@@ -1,39 +1,64 @@
 import type { ConfirmMessageProps, ResponseType } from "../types";
 import axios from "axios";
-import { useAppContext } from "../context/AppContext";
+import { useAdminContext } from "../context/AdminContext";
 import { toast } from "react-toastify";
+import { useAppContext } from "../context/AppContext";
+import { useDoctorContext } from "../context/DoctorContext";
 
 const ConfirmMessage = ({
   selectedId,
   setShowModal: setShowModule,
   showModal,
+  status = "cancelled" as string,
 }: ConfirmMessageProps) => {
-  const { backendUrl, aToken, setAppointments } = useAppContext();
+  const { aToken, setAppointmentsForAdmin } = useAdminContext();
+  const { dToken, setAppointmentsForDoctor } = useDoctorContext();
+  const { backendUrl } = useAppContext();
 
-  const cancelAppointment = async (appointmentID: number) => {
+  const changeStatus = async (appointmentID: number) => {
     try {
       const { data } = await axios.put<ResponseType>(
-        `${backendUrl}/api/admin/change-status`,
-        { status: "cancelled", appointmentID },
+        `${backendUrl}/api/${aToken ? "admin" : "doctor"}/change-status`,
+        { status: status, appointmentID },
         {
-          headers: { aToken: aToken },
+          headers: {
+            aToken,
+            dToken,
+          },
         },
       );
       if (data.success) {
         toast.success(data.message);
-        setAppointments((prev) =>
-          prev?.map((item) =>
-            item.AppointmentInfo.id === appointmentID
-              ? {
-                  ...item,
-                  AppointmentInfo: {
-                    ...item.AppointmentInfo,
-                    status: "cancelled",
-                  },
-                }
-              : item,
-          ),
-        );
+
+        if (aToken) {
+          setAppointmentsForAdmin((prev) =>
+            prev?.map((item) =>
+              item.AppointmentInfo.id === appointmentID
+                ? {
+                    ...item,
+                    AppointmentInfo: {
+                      ...item.AppointmentInfo,
+                      status: status,
+                    },
+                  }
+                : item,
+            ),
+          );
+        } else if (dToken) {
+          setAppointmentsForDoctor((prev) =>
+            prev?.map((item) =>
+              item.AppointmentInfo.id === appointmentID
+                ? {
+                    ...item,
+                    AppointmentInfo: {
+                      ...item.AppointmentInfo,
+                      status: status,
+                    },
+                  }
+                : item,
+            ),
+          );
+        }
       } else {
         toast.error(data.message);
       }
@@ -51,8 +76,9 @@ const ConfirmMessage = ({
             Confirm Cancellation
           </h3>
           <p className="text-gray-500 mb-6">
-            Are you sure you want to cancel this appointment? This action cannot
-            be undone.
+            Are you sure you want to{" "}
+            {status === "cancelled" ? "cancel" : "complete"} this appointment?
+            This action cannot be undone.
           </p>
 
           <div className="flex gap-3 justify-end">
@@ -64,12 +90,12 @@ const ConfirmMessage = ({
             </button>
             <button
               onClick={() => {
-                if (selectedId) cancelAppointment(selectedId);
+                if (selectedId) changeStatus(selectedId);
                 setShowModule(false);
               }}
-              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 shadow-md shadow-red-200 transition-colors cursor-pointer"
+              className={`px-4 py-2 ${status === "cancelled" ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"} text-white rounded-lg shadow-md shadow-red-200 transition-colors cursor-pointer`}
             >
-              Yes, Cancel
+              {status === "cancelled" ? "Yes, Cancel" : "Yes, Complete"}
             </button>
           </div>
         </div>

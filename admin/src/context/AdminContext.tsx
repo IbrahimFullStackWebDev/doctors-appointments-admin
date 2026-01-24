@@ -6,40 +6,35 @@ import {
   useContext,
 } from "react";
 import {
+  type AdminContextType,
   type AppointmentsType,
-  type DoctorContextType,
-  type DoctorDataType,
   type ResponseType,
 } from "../types/index.ts";
 import axios from "axios";
 import { toast } from "react-toastify";
-const DoctorContext = createContext<DoctorContextType | undefined>(undefined);
+const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
-export const DoctorContextProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => {
+export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
+  const currency: string = "$";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [appointmentsForDoctor, setAppointmentsForDoctor] = useState<
+  const [appointmentsForAdmin, setAppointmentsForAdmin] = useState<
     AppointmentsType[]
   >([]);
-  const [doctorInfo, setDoctorInfo] = useState<DoctorDataType>();
 
-  const [dToken, setDToken] = useState<string>(
-    localStorage.getItem("dToken") || "",
+  const [aToken, setAToken] = useState<string>(
+    localStorage.getItem("aToken") || "",
   );
 
   useEffect(() => {
     const getAllAppointments = async () => {
       try {
         const { data } = await axios.post<ResponseType>(
-          `${backendUrl}/api/doctor/appointments`,
+          `${backendUrl}/api/admin/appointments`,
           {},
-          { headers: { dToken: dToken } },
+          { headers: { aToken: aToken } },
         );
         if (data.success) {
-          setAppointmentsForDoctor(data.allAppointments);
+          setAppointmentsForAdmin(data.allAppointments);
         } else {
           toast.error(data.message);
         }
@@ -49,29 +44,27 @@ export const DoctorContextProvider = ({
         console.log(error);
       }
     };
-    if (dToken) {
+    if (aToken) {
       getAllAppointments();
     }
   }, []);
 
   const value = {
     backendUrl,
-    dToken,
-    setAToken: setDToken,
-    appointmentsForDoctor,
-    setAppointmentsForDoctor,
-    doctorInfo,
-    setDoctorInfo,
-    setDToken,
+    aToken,
+    setAToken,
+    currency,
+    appointmentsForAdmin,
+    setAppointmentsForAdmin,
   };
 
   return (
-    <DoctorContext.Provider value={value}>{children}</DoctorContext.Provider>
+    <AdminContext.Provider value={value}>{children}</AdminContext.Provider>
   );
 };
 
-export const useDoctorContext = () => {
-  const context = useContext(DoctorContext);
+export const useAdminContext = () => {
+  const context = useContext(AdminContext);
   if (!context) {
     throw new Error("useAppContext must be used within an AppContextProvider");
   }

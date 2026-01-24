@@ -21,10 +21,27 @@ export interface AppointmentsType {
 export interface AdminContextType {
   backendUrl: string;
   aToken: string;
-  currency: string;
-  appointments: AppointmentsType[];
+  appointmentsForAdmin: AppointmentsType[];
   setAToken: (aToken: string | null) => void;
-  setAppointments: React.Dispatch<React.SetStateAction<AppointmentsType[]>>;
+  setAppointmentsForAdmin: React.Dispatch<
+    React.SetStateAction<AppointmentsType[]>
+  >;
+}
+export interface AppContextType {
+  currency: string;
+  backendUrl: string;
+}
+
+export interface DoctorContextType {
+  backendUrl: string;
+  dToken: string;
+  appointmentsForDoctor: AppointmentsType[];
+  setDToken: (aToken: string | null) => void;
+  setAppointmentsForDoctor: React.Dispatch<
+    React.SetStateAction<AppointmentsType[]>
+  >;
+  doctorInfo: DoctorDataType;
+  setDoctorInfo: React.Dispatch<React.SetStateAction<DoctorDataType | null>>;
 }
 
 export interface SidebarItemsType {
@@ -57,18 +74,41 @@ export interface DoctorDataType {
 export interface ResponseType {
   success: boolean;
   aToken?: string;
+  dToken?: string;
   message: string;
   doctors?: DoctorDataType[];
+  doctorInfo?: DoctorDataType;
   allAppointments?: AppointmentsType[];
-  statistics?: StatisticsType;
+  statistics?: AdminStatisticsType;
 }
 
 export interface ConfirmMessageProps {
   showModal: boolean;
   selectedId: number | null;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  status: string;
 }
-export interface StatisticsType {
+export interface DoctorStatisticsType {
+  appointments: {
+    total: number;
+    scheduled: number;
+    cancelled: number;
+    completed: number;
+  };
+  earnings: {
+    totalEarnings: number;
+    paidEarnings: number;
+    cashEarnings: number;
+  };
+  patients: {
+    total_patients: number;
+    active_patients: number;
+    lost_patients: number;
+    complete_patients: number;
+  };
+}
+
+export interface AdminStatisticsType {
   appointments: {
     total: number;
     scheduled: number;

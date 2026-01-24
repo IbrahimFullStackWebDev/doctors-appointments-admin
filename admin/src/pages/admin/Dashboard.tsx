@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
-import { useAppContext } from "../../context/AppContext";
+import { useAdminContext } from "../../context/AdminContext";
 import ConfirmMessage from "../../components/ConfirmMessage";
 import type {
   AppointmentsType,
   ResponseType,
-  StatisticsType,
+  AdminStatisticsType,
 } from "../../types";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const Dashboard = () => {
-  const { appointments, backendUrl, aToken } = useAppContext();
-  const [statisticsInfo, setStatisticsInfo] = useState<StatisticsType>();
+const AdminDashboard = () => {
+  const { appointmentsForAdmin, backendUrl, aToken } = useAdminContext();
+  const [statisticsInfo, setStatisticsInfo] = useState<AdminStatisticsType>();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   let filterdAppointments: AppointmentsType[] = [];
-  if (appointments) {
-    filterdAppointments = appointments.filter(
+  if (appointmentsForAdmin) {
+    filterdAppointments = appointmentsForAdmin.filter(
       (item) => item.AppointmentInfo.status === "scheduled",
     );
   }
@@ -34,7 +34,6 @@ const Dashboard = () => {
         );
         if (data.success) {
           setStatisticsInfo(data.statistics);
-          console.log(data.statistics);
         } else {
           toast.error(data.message);
         }
@@ -44,13 +43,15 @@ const Dashboard = () => {
         console.log(error);
       }
     };
-    getAllStatistics();
+    if (aToken) {
+      getAllStatistics();
+    }
   }, []);
 
   return (
-    <div className="w-full flex flex-col flex-start gap-20 p-8">
-      <div className="flex flex-row items-center gap-8 ">
-        <div className="flex flex-col items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
+    <div className="w-full flex flex-col flex-start gap-20 p-2 lg:p-8">
+      <div className="w-full flex flex-row items-center gap-8 overflow-auto">
+        <div className="flex flex-col flex-shrink-0 items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Doctors:{" "}
             <span className="text-gray-900">
@@ -82,7 +83,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
+        <div className="flex flex-col flex-shrink-0 items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Appointments:{" "}
             <span className="text-gray-900">
@@ -128,7 +129,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
+        <div className="flex flex-col  flex-shrink-0  items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Patients:{" "}
             <span className="text-gray-900">{statisticsInfo?.users.total}</span>
@@ -164,7 +165,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/2 bg-white rounded-lg">
+      <div className="w-full lg:w-3/4 xl:w-1/2 bg-white rounded-lg">
         <div className="flex flex-row text-xl items-start gap-2 p-4 border-b border-gray-300">
           <img src={assets.list_icon} className="w-6" alt="" />
           <p className="text-gray-500 font-semibold">Latest Appointment</p>
@@ -212,4 +213,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

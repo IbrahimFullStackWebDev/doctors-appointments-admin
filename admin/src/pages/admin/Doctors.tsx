@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import type { DoctorDataType, ResponseType } from "../../types";
 import axios from "axios";
-import { useAppContext } from "../../context/AppContext";
+import { useAdminContext } from "../../context/AdminContext";
 import { toast } from "react-toastify";
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState<DoctorDataType[]>([]);
-  const { backendUrl, aToken } = useAppContext();
+  const { backendUrl, aToken } = useAdminContext();
 
   const changeAvailability = async (doctorId: number, available: boolean) => {
     try {

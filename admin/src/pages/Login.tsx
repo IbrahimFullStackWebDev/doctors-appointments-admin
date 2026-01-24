@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAppContext } from "../context/AppContext.tsx";
+import { useAdminContext } from "../context/AdminContext.tsx";
 import { toast } from "react-toastify";
 import { type ResponseType } from "../types/index.ts";
 import { useNavigate } from "react-router-dom";
+import { useDoctorContext } from "../context/DoctorContext.tsx";
+import { useAppContext } from "../context/AppContext.tsx";
 import { isTokenExpired } from "../utils/IsTokenExpired.ts";
 
 const Login = () => {
@@ -11,24 +13,68 @@ const Login = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const navigate = useNavigate();
+  const { backendUrl } = useAppContext();
+  const { setAToken, aToken } = useAdminContext();
+  const { setDToken, setDoctorInfo, dToken } = useDoctorContext();
 
-  const { backendUrl, setAToken, aToken } = useAppContext();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post<ResponseType>(
-        `${backendUrl}/api/${status}/login`,
-        {
-          email,
-          password,
-        },
-      );
-      if (data.success) {
-        setAToken(data.aToken as string);
-        navigate("/dashboard");
-        toast.success(data.message);
+      if (status === "admin") {
+        const { data } = await axios.post<ResponseType>(
+          `${backendUrl}/api/admin/login`,
+          {
+            email,
+            password,
+          },
+        );
+        if (data.success) {
+          navigate("/dashboard");
+
+          localStorage.setItem("aToken", data.aToken as string);
+          setAToken(data.aToken as string);
+
+          if (localStorage.getItem("dToken")) {
+            localStorage.removeItem("dToken");
+            setDToken(null);
+          }
+          if (localStorage.getItem("doctorInfo")) {
+            localStorage.removeItem("doctorInfo");
+            setDoctorInfo(null);
+          }
+
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
       } else {
-        toast.error(data.message);
+        const { data } = await axios.post<ResponseType>(
+          `${backendUrl}/api/doctor/login`,
+          {
+            email,
+            password,
+          },
+        );
+        console.log(data.success);
+
+        if (data.success) {
+          navigate("/dashboard");
+
+          setDToken(data.dToken as string);
+          setDoctorInfo(data.doctorInfo);
+
+          if (localStorage.getItem("aToken")) {
+            localStorage.removeItem("aToken");
+            setAToken(null);
+          }
+
+          localStorage.setItem("doctorInfo", JSON.stringify(data.doctorInfo));
+          localStorage.setItem("dToken", data.dToken as string);
+
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
       }
     } catch (error) {
       const err = error as Error;
@@ -36,13 +82,29 @@ const Login = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    if (aToken && isTokenExpired(aToken)) {
-      navigate("/dashboard");
-    } else {
-      toast.warn("Your session has expired");
+    if (aToken) {
+      const isExpired = isTokenExpired(aToken);
+      if (isExpired) {
+        localStorage.removeItem("aToken");
+        toast.warn("Your session ended, Please login again");
+      } else {
+        navigate("/dashboard");
+      }
     }
-  });
+    if (dToken) {
+      const isExpired = isTokenExpired(dToken);
+      if (isExpired) {
+        localStorage.removeItem("dToken");
+        localStorage.removeItem("doctorInfo");
+        toast.warn("Your session ended, Please login again");
+      } else {
+        navigate("/dashboard");
+      }
+    }
+  }, []);
+
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
