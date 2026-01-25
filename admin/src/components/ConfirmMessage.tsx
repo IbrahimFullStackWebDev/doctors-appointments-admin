@@ -7,7 +7,7 @@ import { useDoctorContext } from "../context/DoctorContext";
 
 const ConfirmMessage = ({
   selectedId,
-  setShowModal: setShowModule,
+  setShowModal,
   showModal,
   status = "cancelled" as string,
 }: ConfirmMessageProps) => {
@@ -67,7 +67,7 @@ const ConfirmMessage = ({
 
           <div className="flex gap-3 justify-end">
             <button
-              onClick={() => setShowModule(false)}
+              onClick={() => setShowModal(false)}
               className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
             >
               No, Keep it
@@ -75,7 +75,7 @@ const ConfirmMessage = ({
             <button
               onClick={() => {
                 if (selectedId) changeStatus(selectedId);
-                setShowModule(false);
+                setShowModal(false);
               }}
               className={`px-4 py-2 ${status === "cancelled" ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"} text-white rounded-lg shadow-md shadow-red-200 transition-colors cursor-pointer`}
             >

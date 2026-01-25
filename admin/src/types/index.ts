@@ -38,7 +38,7 @@ export interface DoctorContextType {
 
 export interface SidebarItemsType {
   path: string;
-  lable: string;
+  label: string;
   image: string;
 }
 export interface SpecialityDataType {
