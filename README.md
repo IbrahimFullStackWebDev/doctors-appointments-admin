@@ -10,7 +10,7 @@
 
 1. Admin Permissions:
 
-- **Doctors Menagament:** Adding, Delete, Update Doctor Information.
+- **Doctors Menagament:** Adding, Update Doctor Information.
 - **Appointments Menagament:** See all appointments and change status them.
 - **Statistics (Dashboard):** See the patients total and doctors and appointments.
 - **Authentication (Admin Login):** Login System for Administrators using (JWT).
