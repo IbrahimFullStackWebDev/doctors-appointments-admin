@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
 import { specialityData } from "../../assets/assets";
 import { type ResponseType, type SpecialityDataType } from "../../types";
@@ -21,8 +21,6 @@ const AddDoctor = () => {
   const [addressLine2, setAddressLine2] = useState<string>("");
   const { aToken } = useAdminContext();
   const { backendUrl } = useAppContext();
-
-  console.log(image);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,6 +55,17 @@ const AddDoctor = () => {
       );
       if (data.success) {
         toast.success(data.message);
+        setImage(null);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setExperience("1 Year");
+        setFees("");
+        setAbout("");
+        setSpeciality("Genaral Physician");
+        setDegree("");
+        setAddressLine1("");
+        setAddressLine2("");
       } else {
         toast.error(data.message);
       }
@@ -66,6 +75,12 @@ const AddDoctor = () => {
       toast.error(err.message);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (image) URL.revokeObjectURL(URL.createObjectURL(image));
+    };
+  }, [image]);
 
   return (
     <div className="w-full mt-8 flex flex-col items-start gap-2">
