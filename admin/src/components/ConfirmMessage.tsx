@@ -11,9 +11,9 @@ const ConfirmMessage = ({
   showModal,
   status = "cancelled" as string,
 }: ConfirmMessageProps) => {
-  const { aToken, setAppointmentsForAdmin } = useAdminContext();
-  const { dToken, setAppointmentsForDoctor } = useDoctorContext();
-  const { backendUrl } = useAppContext();
+  const { aToken } = useAdminContext();
+  const { dToken } = useDoctorContext();
+  const { backendUrl, setAppointments } = useAppContext();
 
   const changeStatus = async (appointmentID: number) => {
     try {
@@ -30,35 +30,19 @@ const ConfirmMessage = ({
       if (data.success) {
         toast.success(data.message);
 
-        if (aToken) {
-          setAppointmentsForAdmin((prev) =>
-            prev?.map((item) =>
-              item.AppointmentInfo.id === appointmentID
-                ? {
-                    ...item,
-                    AppointmentInfo: {
-                      ...item.AppointmentInfo,
-                      status: status,
-                    },
-                  }
-                : item,
-            ),
-          );
-        } else if (dToken) {
-          setAppointmentsForDoctor((prev) =>
-            prev?.map((item) =>
-              item.AppointmentInfo.id === appointmentID
-                ? {
-                    ...item,
-                    AppointmentInfo: {
-                      ...item.AppointmentInfo,
-                      status: status,
-                    },
-                  }
-                : item,
-            ),
-          );
-        }
+        setAppointments((prev) =>
+          prev?.map((item) =>
+            item.AppointmentInfo.id === appointmentID
+              ? {
+                  ...item,
+                  AppointmentInfo: {
+                    ...item.AppointmentInfo,
+                    status: status,
+                  },
+                }
+              : item,
+          ),
+        );
       } else {
         toast.error(data.message);
       }

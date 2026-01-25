@@ -3,11 +3,9 @@ import { assets } from "../../assets/assets";
 import { calculateAge } from "../../utils/CalculateAge";
 import ConfirmMessage from "../../components/ConfirmMessage";
 import { useAppContext } from "../../context/AppContext";
-import { useDoctorContext } from "../../context/DoctorContext";
 
 const DoctorAppointmentsPage = () => {
-  const { appointmentsForDoctor } = useDoctorContext();
-  const { currency } = useAppContext();
+  const { currency, appointments } = useAppContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [statusType, setStatusType] = useState<string>("");
@@ -26,8 +24,8 @@ const DoctorAppointmentsPage = () => {
           <p>Fees</p>
           <p>Active</p>
         </div>
-        {appointmentsForDoctor &&
-          appointmentsForDoctor?.map((item, index) => (
+        {appointments &&
+          appointments?.map((item, index) => (
             <div
               key={item.AppointmentInfo.id}
               className="w-full sm:grid grid-cols-[0.5fr_3fr_1fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col items-center py-3 px-6 border-b border-gray-300 hover:bg-green-100 cursor-pointer transition-all duration-300"

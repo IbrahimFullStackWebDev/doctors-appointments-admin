@@ -12,14 +12,14 @@ import { useDoctorContext } from "../../context/DoctorContext";
 import { useAppContext } from "../../context/AppContext";
 
 const DoctorDashboard = () => {
-  const { appointmentsForDoctor, dToken } = useDoctorContext();
-  const { backendUrl, currency } = useAppContext();
+  const { dToken } = useDoctorContext();
+  const { backendUrl, currency, appointments } = useAppContext();
   const [statisticsInfo, setStatisticsInfo] = useState<DoctorStatisticsType>();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   let filterdAppointments: AppointmentsType[] = [];
-  if (appointmentsForDoctor) {
-    filterdAppointments = appointmentsForDoctor.filter(
+  if (appointments) {
+    filterdAppointments = appointments.filter(
       (item) => item.AppointmentInfo.status === "scheduled",
     );
   }
@@ -222,6 +222,7 @@ const DoctorDashboard = () => {
         selectedId={selectedId}
         showModal={showModal}
         setShowModal={setShowModal}
+        status="cancelled"
       />
     </div>
   );

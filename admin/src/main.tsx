@@ -7,13 +7,13 @@ import { AppContextProvider } from "./context/AppContext.tsx";
 import { DoctorContextProvider } from "./context/DoctorContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <DoctorContextProvider>
-    <AdminContextProvider>
-      <AppContextProvider>
+  <AppContextProvider>
+    <DoctorContextProvider>
+      <AdminContextProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </AppContextProvider>
-    </AdminContextProvider>
-  </DoctorContextProvider>,
+      </AdminContextProvider>
+    </DoctorContextProvider>
+  </AppContextProvider>,
 );

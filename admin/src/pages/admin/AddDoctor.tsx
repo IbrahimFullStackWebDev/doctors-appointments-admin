@@ -5,6 +5,7 @@ import { type ResponseType, type SpecialityDataType } from "../../types";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useAdminContext } from "../../context/AdminContext";
+import { useAppContext } from "../../context/AppContext";
 
 const AddDoctor = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -18,7 +19,8 @@ const AddDoctor = () => {
   const [degree, setDegree] = useState<string>("");
   const [addressLine1, setAddressLine1] = useState<string>("");
   const [addressLine2, setAddressLine2] = useState<string>("");
-  const { backendUrl, aToken } = useAdminContext();
+  const { aToken } = useAdminContext();
+  const { backendUrl } = useAppContext();
 
   console.log(image);
 

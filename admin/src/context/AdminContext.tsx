@@ -5,20 +5,14 @@ import {
   ReactNode,
   useContext,
 } from "react";
-import {
-  type AdminContextType,
-  type AppointmentsType,
-  type ResponseType,
-} from "../types/index.ts";
+import { type AdminContextType, type ResponseType } from "../types/index.ts";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAppContext } from "./AppContext.tsx";
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [appointmentsForAdmin, setAppointmentsForAdmin] = useState<
-    AppointmentsType[]
-  >([]);
+  const { backendUrl, setAppointments } = useAppContext();
 
   const [aToken, setAToken] = useState<string>(
     localStorage.getItem("aToken") || "",
@@ -30,10 +24,10 @@ export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
         const { data } = await axios.post<ResponseType>(
           `${backendUrl}/api/admin/appointments`,
           {},
-          { headers: { aToken: aToken } },
+          { headers: { aToken } },
         );
         if (data.success) {
-          setAppointmentsForAdmin(data.allAppointments);
+          setAppointments(data.allAppointments || []);
         } else {
           toast.error(data.message);
         }
@@ -46,15 +40,12 @@ export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
     if (aToken) {
       getAllAppointments();
     }
-  }, []);
+  }, [aToken]);
 
   const value = {
-    backendUrl,
     aToken,
     setAToken,
-    appointmentsForAdmin,
-    setAppointmentsForAdmin,
-  };
+  } as AdminContextType;
 
   return (
     <AdminContext.Provider value={value}>{children}</AdminContext.Provider>
@@ -64,7 +55,9 @@ export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
 export const useAdminContext = () => {
   const context = useContext(AdminContext);
   if (!context) {
-    throw new Error("useAppContext must be used within an AppContextProvider");
+    throw new Error(
+      "useAdminContext must be used within an AdminContextProvider",
+    );
   }
   return context;
 };

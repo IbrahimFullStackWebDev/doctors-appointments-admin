@@ -19,27 +19,19 @@ export interface AppointmentsType {
   };
 }
 export interface AdminContextType {
-  backendUrl: string;
   aToken: string;
-  appointmentsForAdmin: AppointmentsType[];
   setAToken: (aToken: string | null) => void;
-  setAppointmentsForAdmin: React.Dispatch<
-    React.SetStateAction<AppointmentsType[]>
-  >;
 }
 export interface AppContextType {
   currency: string;
   backendUrl: string;
+  appointments: AppointmentsType[];
+  setAppointments: React.Dispatch<React.SetStateAction<AppointmentsType[]>>;
 }
 
 export interface DoctorContextType {
-  backendUrl: string;
   dToken: string;
-  appointmentsForDoctor: AppointmentsType[];
   setDToken: (aToken: string | null) => void;
-  setAppointmentsForDoctor: React.Dispatch<
-    React.SetStateAction<AppointmentsType[]>
-  >;
   doctorInfo: DoctorDataType;
   setDoctorInfo: React.Dispatch<React.SetStateAction<DoctorDataType | null>>;
 }

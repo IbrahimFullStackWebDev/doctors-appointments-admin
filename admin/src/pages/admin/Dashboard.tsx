@@ -9,15 +9,17 @@ import type {
 } from "../../types";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useAppContext } from "../../context/AppContext";
 
 const AdminDashboard = () => {
-  const { appointmentsForAdmin, backendUrl, aToken } = useAdminContext();
+  const { aToken } = useAdminContext();
+  const { appointments, backendUrl } = useAppContext();
   const [statisticsInfo, setStatisticsInfo] = useState<AdminStatisticsType>();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   let filterdAppointments: AppointmentsType[] = [];
-  if (appointmentsForAdmin) {
-    filterdAppointments = appointmentsForAdmin.filter(
+  if (appointments) {
+    filterdAppointments = appointments.filter(
       (item) => item.AppointmentInfo.status === "scheduled",
     );
   }
@@ -208,6 +210,7 @@ const AdminDashboard = () => {
         selectedId={selectedId}
         showModal={showModal}
         setShowModal={setShowModal}
+        status="cancelled"
       />
     </div>
   );

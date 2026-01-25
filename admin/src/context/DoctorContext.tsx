@@ -6,13 +6,13 @@ import {
   useContext,
 } from "react";
 import {
-  type AppointmentsType,
   type DoctorContextType,
   type DoctorDataType,
   type ResponseType,
 } from "../types/index.ts";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAppContext } from "./AppContext.tsx";
 const DoctorContext = createContext<DoctorContextType | undefined>(undefined);
 
 export const DoctorContextProvider = ({
@@ -20,10 +20,7 @@ export const DoctorContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [appointmentsForDoctor, setAppointmentsForDoctor] = useState<
-    AppointmentsType[]
-  >([]);
+  const { backendUrl, setAppointments } = useAppContext();
   const [doctorInfo, setDoctorInfo] = useState<DoctorDataType | null>(
     localStorage.getItem("doctorInfo")
       ? (JSON.parse(
@@ -45,7 +42,7 @@ export const DoctorContextProvider = ({
           { headers: { dToken: dToken } },
         );
         if (data.success) {
-          setAppointmentsForDoctor(data.allAppointments);
+          setAppointments(data.allAppointments || []);
         } else {
           toast.error(data.message);
         }
@@ -58,18 +55,14 @@ export const DoctorContextProvider = ({
     if (dToken) {
       getAllAppointments();
     }
-  }, []);
+  }, [dToken]);
 
   const value = {
-    backendUrl,
     dToken,
-    setAToken: setDToken,
-    appointmentsForDoctor,
-    setAppointmentsForDoctor,
+    setDToken,
     doctorInfo,
     setDoctorInfo,
-    setDToken,
-  };
+  } as DoctorContextType;
 
   return (
     <DoctorContext.Provider value={value}>{children}</DoctorContext.Provider>
@@ -79,7 +72,9 @@ export const DoctorContextProvider = ({
 export const useDoctorContext = () => {
   const context = useContext(DoctorContext);
   if (!context) {
-    throw new Error("useAppContext must be used within an AppContextProvider");
+    throw new Error(
+      "useDoctorContext must be used within an AppDoctorProvider",
+    );
   }
   return context;
 };
