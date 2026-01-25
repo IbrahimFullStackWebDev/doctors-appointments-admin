@@ -8,6 +8,8 @@ import { useAdminContext } from "../../context/AdminContext";
 import { useAppContext } from "../../context/AppContext";
 
 const AddDoctor = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [image, setImage] = useState<File | null>(null);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -24,6 +26,7 @@ const AddDoctor = () => {
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (!image) {
         return toast.error("Please select an image");
@@ -73,6 +76,8 @@ const AddDoctor = () => {
       const err = error as Error;
       console.log(err);
       toast.error(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -282,9 +287,16 @@ const AddDoctor = () => {
 
         <button
           type="submit"
-          className="px-10 py-3 rounded-full bg-blue-500 text-white hover:bg-blue-700 transition-all duration-300 cursor-pointer"
+          className="px-10 py-3 rounded-full flex flex-col items-center bg-blue-500 text-white hover:bg-blue-700 transition-all duration-300 cursor-pointer"
         >
-          Add Doctor
+          {loading ? (
+            <div className="flex flex-row items-center gap-2">
+              <p>Adding Doctor...</p>
+              <div className="w-6 h-6 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            "Add Doctor"
+          )}
         </button>
       </form>
     </div>

@@ -9,6 +9,13 @@ const Doctors = () => {
   const [doctors, setDoctors] = useState<DoctorDataType[]>([]);
   const { aToken } = useAdminContext();
   const { backendUrl } = useAppContext();
+  const [message, setMessage] = useState<string>("Loading Doctors...");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage("Doctors Not Found");
+    }, 10000);
+  }, [doctors]);
 
   const changeAvailability = async (doctorId: number, available: boolean) => {
     try {
@@ -89,6 +96,13 @@ const Doctors = () => {
               </div>
             </div>
           ))}
+        {doctors?.length === 0 && (
+          <p
+            className={`py-10 text-center text-gray-400 ${message === "Loading Doctors..." ? "animate-pulse" : " text-gray-900"}`}
+          >
+            {message}
+          </p>
+        )}
       </div>
     </div>
   );

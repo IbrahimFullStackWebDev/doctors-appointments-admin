@@ -56,7 +56,7 @@ const AdminDashboard = () => {
         <div className="flex flex-col flex-shrink-0 items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Doctors:{" "}
-            <span className="text-gray-900">
+            <span className="text-gray-700 font-semibold">
               {statisticsInfo?.doctors.total}
             </span>
           </p>
@@ -67,19 +67,13 @@ const AdminDashboard = () => {
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-blue-500 rounded-full"></div>
                 <p className="text-sm text-green-500">
-                  Available:{" "}
-                  <span className="text-green-500">
-                    {statisticsInfo?.doctors.available}
-                  </span>
+                  Available: {statisticsInfo?.doctors.available}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-red-500 rounded-full"></div>
                 <p className="text-sm text-red-500">
-                  notAvailable:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.doctors.notAvailable}
-                  </span>
+                  notAvailable: {statisticsInfo?.doctors.notAvailable}
                 </p>
               </div>
             </div>
@@ -88,7 +82,7 @@ const AdminDashboard = () => {
         <div className="flex flex-col flex-shrink-0 items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Appointments:{" "}
-            <span className="text-gray-900">
+            <span className="text-gray-700 font-semibold">
               {statisticsInfo?.appointments.total}
             </span>
           </p>
@@ -103,28 +97,19 @@ const AdminDashboard = () => {
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-blue-500 rounded-full"></div>
                 <p className="text-sm text-blue-500">
-                  Scheduled:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.appointments.scheduled}
-                  </span>
+                  Scheduled: {statisticsInfo?.appointments.scheduled}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-green-500 rounded-full"></div>
                 <p className="text-sm text-green-500">
-                  Completed:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.appointments.completed}
-                  </span>
+                  Completed: {statisticsInfo?.appointments.completed}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-red-500 rounded-full"></div>
                 <p className="text-sm text-red-500">
-                  Cancelled:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.appointments.cancelled}
-                  </span>
+                  Cancelled: {statisticsInfo?.appointments.cancelled}
                 </p>
               </div>
             </div>
@@ -134,7 +119,9 @@ const AdminDashboard = () => {
         <div className="flex flex-col  flex-shrink-0  items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Patients:{" "}
-            <span className="text-gray-900">{statisticsInfo?.users.total}</span>
+            <span className="text-gray-700 font-semibold">
+              {statisticsInfo?.users.total}
+            </span>
           </p>
           <div className="flex flex-row items-center gap-2 ">
             <img
@@ -147,20 +134,14 @@ const AdminDashboard = () => {
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-green-500 rounded-full"></div>
                 <p className="text-sm text-green-500">
-                  Active:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.users.active}
-                  </span>
+                  Active: {statisticsInfo?.users.active}
                 </p>
               </div>
 
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-red-500 rounded-full"></div>
                 <p className="text-sm text-red-500">
-                  notActive:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.users.notActive}
-                  </span>
+                  notActive: {statisticsInfo?.users.notActive}
                 </p>
               </div>
             </div>

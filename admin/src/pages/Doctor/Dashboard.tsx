@@ -50,13 +50,13 @@ const DoctorDashboard = () => {
     }
   }, []);
 
-  return (
+  return statisticsInfo ? (
     <div className="w-full flex flex-col flex-start gap-20 p-2 lg:p-8">
       <div className="w-full flex flex-row items-center gap-8 overflow-auto">
         <div className="flex flex-col flex-shrink-0 items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Total Earnings:{" "}
-            <span className="text-gray-900">
+            <span className="text-gray-700 font-semibold">
               {statisticsInfo?.earnings.totalEarnings + currency}
             </span>
           </p>
@@ -67,19 +67,14 @@ const DoctorDashboard = () => {
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-blue-500 rounded-full"></div>
                 <p className="text-sm text-green-500">
-                  Paid:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.earnings.paidEarnings + currency}
-                  </span>
+                  Paid (Pending):{" "}
+                  {statisticsInfo?.earnings.paidEarnings + currency}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-blue-500 rounded-full"></div>
                 <p className="text-sm text-blue-500">
-                  Cash:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.earnings.cashEarnings + currency}
-                  </span>
+                  Cash: {statisticsInfo?.earnings.cashEarnings + currency}
                 </p>
               </div>
             </div>
@@ -88,7 +83,7 @@ const DoctorDashboard = () => {
         <div className="flex flex-col flex-shrink-0 items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Appointments:{" "}
-            <span className="text-gray-900">
+            <span className="text-gray-700 font-semibold">
               {statisticsInfo?.appointments.total}
             </span>
           </p>
@@ -103,28 +98,19 @@ const DoctorDashboard = () => {
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-blue-500 rounded-full"></div>
                 <p className="text-sm text-blue-500">
-                  Scheduled:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.appointments.scheduled}
-                  </span>
+                  Scheduled: {statisticsInfo?.appointments.scheduled}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-green-500 rounded-full"></div>
                 <p className="text-sm text-green-500">
-                  Completed:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.appointments.completed}
-                  </span>
+                  Completed: {statisticsInfo?.appointments.completed}
                 </p>
               </div>
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-red-500 rounded-full"></div>
                 <p className="text-sm text-red-500">
-                  Cancelled:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.appointments.cancelled}
-                  </span>
+                  Cancelled: {statisticsInfo?.appointments.cancelled}
                 </p>
               </div>
             </div>
@@ -134,7 +120,7 @@ const DoctorDashboard = () => {
         <div className="flex flex-col  flex-shrink-0  items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Patients:{" "}
-            <span className="text-gray-900">
+            <span className="text-gray-700 font-semibold">
               {statisticsInfo?.patients.total_patients}
             </span>
           </p>
@@ -149,20 +135,14 @@ const DoctorDashboard = () => {
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-blue-500 rounded-full"></div>
                 <p className="text-sm text-blue-500">
-                  Active:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.patients.active_patients}
-                  </span>
+                  Active: {statisticsInfo?.patients.active_patients}
                 </p>
               </div>
 
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-red-500 rounded-full"></div>
                 <p className="text-sm text-red-500">
-                  Loast Patients:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.patients.lost_patients}
-                  </span>
+                  Loast Patients: {statisticsInfo?.patients.lost_patients}
                 </p>
               </div>
 
@@ -170,9 +150,7 @@ const DoctorDashboard = () => {
                 <div className="p-1 bg-green-500 rounded-full"></div>
                 <p className="text-sm text-green-500">
                   Completed Patients:{" "}
-                  <span className="text-gray-500">
-                    {statisticsInfo?.patients.complete_patients}
-                  </span>
+                  {statisticsInfo?.patients.complete_patients}
                 </p>
               </div>
             </div>
@@ -225,6 +203,8 @@ const DoctorDashboard = () => {
         status="cancelled"
       />
     </div>
+  ) : (
+    <div className="p-10 animate-pulse text-gray-400">Loading Dashboard...</div>
   );
 };
 

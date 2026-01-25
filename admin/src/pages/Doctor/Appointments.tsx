@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
 import { calculateAge } from "../../utils/CalculateAge";
 import ConfirmMessage from "../../components/ConfirmMessage";
@@ -9,12 +9,19 @@ const DoctorAppointmentsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [statusType, setStatusType] = useState<string>("");
+  const [message, setMessage] = useState<string>("Loading Appointments...");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage("Appointments Not Found");
+    }, 10000);
+  }, [appointments]);
 
   return (
-    <div className="w-full flex flex-col gap-4 items-start m-4 overflow-auto">
+    <div className="w-full flex flex-col gap-4 items-start m-4">
       <p className="text-xl text-gray-700 font-medium">All Appointments</p>
-      <div className="flex flex-col items-center bg-white w-full pt-4 border border-gray-300 rounded-lg overflow-y-auto h-[400px] shadow-sm">
-        <div className="hidden sm:grid grid-cols-[0.5fr_3fr_1fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col py-3 px-6 border-b border-gray-300 w-full text-gray-600 font-semibold">
+      <div className="w-full min-w-[900px] flex flex-col items-center bg-white w-full pt-4 border border-gray-300 rounded-lg h-[400px] shadow-sm overflow-auto">
+        <div className="w-full grid grid-cols-[0.5fr_3fr_1fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col py-3 px-6 border-b border-gray-300 text-gray-600 font-semibold">
           <p className="text-gray-700">#</p>
           <p>Patient</p>
           <p>Paid</p>
@@ -28,7 +35,7 @@ const DoctorAppointmentsPage = () => {
           appointments?.map((item, index) => (
             <div
               key={item.AppointmentInfo.id}
-              className="w-full sm:grid grid-cols-[0.5fr_3fr_1fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col items-center py-3 px-6 border-b border-gray-300 hover:bg-green-100 cursor-pointer transition-all duration-300"
+              className="w-full grid grid-cols-[0.5fr_3fr_1fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col items-center py-3 px-6 border-b border-gray-300 hover:bg-green-100 cursor-pointer transition-all duration-300"
             >
               <p className="text-gray-500 text-sm">{index + 1}</p>
               <div className="flex flex-row items-center gap-2 text-gray-500 text-sm">
@@ -94,8 +101,10 @@ const DoctorAppointmentsPage = () => {
             </div>
           ))}
         {appointments?.length === 0 && (
-          <p className="py-10 text-center text-gray-400">
-            No appointments found.
+          <p
+            className={`py-10 text-center text-gray-400 ${message === "Loading Appointments..." ? "animate-pulse" : " text-gray-900"}`}
+          >
+            {message}
           </p>
         )}
       </div>

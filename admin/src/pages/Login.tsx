@@ -10,6 +10,8 @@ import { isTokenExpired } from "../utils/IsTokenExpired.ts";
 
 const Login = () => {
   const [status, setStatus] = useState<string>("admin");
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (status === "admin") {
         const { data } = await axios.post<ResponseType>(
@@ -80,6 +83,8 @@ const Login = () => {
       const err = error as Error;
       toast.error(err.message);
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -140,8 +145,12 @@ const Login = () => {
           />
         </div>
       </div>
-      <button className="w-full bg-blue-500 text-white text-lg cursor-pointer p-2 rounded-md hover:bg-blue-700 transition-all duration-300">
-        Login
+      <button className="w-full bg-blue-500 flex flex-col items-center text-white text-lg cursor-pointer p-2 rounded-md hover:bg-blue-700 transition-all duration-300">
+        {loading ? (
+          <div className="w-6 h-6 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+        ) : (
+          "Login"
+        )}
       </button>
       <div className="w-full flex flex-row items-start">
         <p className="text-gray-500 text-sm">
