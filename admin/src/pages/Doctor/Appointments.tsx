@@ -93,7 +93,13 @@ const DoctorAppointmentsPage = () => {
               )}
             </div>
           ))}
+        {appointments?.length === 0 && (
+          <p className="py-10 text-center text-gray-400">
+            No appointments found.
+          </p>
+        )}
       </div>
+
       <ConfirmMessage
         selectedId={selectedId}
         showModal={showModal}

@@ -5,8 +5,7 @@ import ConfirmMessage from "../../components/ConfirmMessage";
 import { useAppContext } from "../../context/AppContext";
 
 const AdminAppointmentsPage = () => {
-  const { appointments } = useAppContext();
-  const { currency } = useAppContext();
+  const { currency, appointments } = useAppContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
@@ -80,6 +79,11 @@ const AdminAppointmentsPage = () => {
               )}
             </div>
           ))}
+        {appointments?.length === 0 && (
+          <p className="py-10 text-center text-gray-400">
+            No appointments found.
+          </p>
+        )}
       </div>
       <ConfirmMessage
         selectedId={selectedId}
