@@ -1,4 +1,6 @@
-# 🩺 Doctor Appointment Booking System - Admin
+# 🩺 Doctor Appointment Booking System (Admin & Doctor Panels)
+
+A professional healthcare management solution built with React 19 and TypeScript. This repository contains the administrative side of the platform, featuring dual-role dashboards for clinic owners and medical staff.
 
 ## This repository includes :
 
@@ -24,12 +26,23 @@
 
 ## 🛠️ Tech Stack:
 
-- **React 19** (Vite)
-- **TypeScript**
-- **Tailwind CSS** (v4)
-- **Context API** To manage Token and Data
-- **Axios** To connect with server.
-- **React Toastify** For notification.
+- **Frontend** React 19 (Vite), TypeScript.
+- **Styling** Tailwind CSS v4.
+- **State Management** React Context API (Auth & Data persistence).
+- **Networking** Axios (with Interceptors for JWT).
+- **Feedback** React Toastify for real-time user notifications.
+
+## 🔑 Demo Access (For Recruiters)
+
+- To test the live functionality without creating an account:
+
+* Admin Login: admin@gmail.com / strongPassword
+
+* Doctor Login: richard@example.com / 123456789
+
+* Doctor Login: emily@example.com / 123456789
+
+* Doctor Login: andrew@example.com / 123456789
 
 ## ⚙️ Setup
 
