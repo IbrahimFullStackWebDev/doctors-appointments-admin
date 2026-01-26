@@ -11,9 +11,9 @@ const DoctorAppointmentsPage = () => {
   const [statusType, setStatusType] = useState<string>("");
 
   return (
-    <div className="w-full flex flex-col gap-4 items-start m-4">
+    <div className="w-full flex flex-col gap-4 items-start m-4 overflow-auto">
       <p className="text-xl text-gray-700 font-medium">All Appointments</p>
-      <div className="w-full min-w-[900px] flex flex-col items-center bg-white w-full pt-4 border border-gray-300 rounded-lg h-[400px] shadow-sm overflow-auto">
+      <div className="w-full min-w-[900px] flex flex-col items-center bg-white w-full pt-4 border border-gray-300 rounded-lg h-[400px] shadow-sm ">
         <div className="w-full grid grid-cols-[0.5fr_3fr_1fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col py-3 px-6 border-b border-gray-300 text-gray-600 font-semibold">
           <p className="text-gray-700">#</p>
           <p>Patient</p>
@@ -100,7 +100,7 @@ const DoctorAppointmentsPage = () => {
         )}
 
         {appointments?.length === 0 && !loading && (
-          <p className="py-10 text-center text-gray-400 animate-pulse">
+          <p className="py-10 text-center text-gray-400">
             Not Appointments Found
           </p>
         )}

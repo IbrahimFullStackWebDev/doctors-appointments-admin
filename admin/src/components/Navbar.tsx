@@ -11,7 +11,11 @@ const Navbar = () => {
     (aToken || dToken) && (
       <nav className="w-full flex flex-row items-center justify-between px-4 md:px-10 py-2 border-b border-gray-300 bg-white">
         <div className="flex flex-row gap-6 items-center">
-          <img src={assets.admin_logo} className="w-40" alt="admin logo" />
+          <img
+            src={assets.admin_logo}
+            className="w-24 sm:w-40"
+            alt="admin logo"
+          />
           <div className="flex flex-row gap-2 items-center">
             {dToken && doctorInfo?.image && (
               <img
@@ -37,7 +41,7 @@ const Navbar = () => {
 
             navigate("/");
           }}
-          className="bg-blue-500 text-sm px-14 py-3 rounded-full text-white transition-all hover:bg-blue-700 duration-300 cursor-pointer"
+          className="bg-blue-500 text-sm px-6 sm:px-14 py-3 rounded-full text-white transition-all hover:bg-blue-700 duration-300 cursor-pointer"
         >
           Logout
         </button>

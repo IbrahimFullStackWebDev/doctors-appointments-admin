@@ -51,8 +51,8 @@ const DoctorDashboard = () => {
   }, []);
 
   return statisticsInfo ? (
-    <div className="w-full flex flex-col flex-start gap-20 p-2 lg:p-8">
-      <div className="w-full flex flex-row items-center gap-8 overflow-auto">
+    <div className="w-full flex flex-col flex-start gap-20 p-2 lg:p-8 overflow-auto">
+      <div className="w-full flex flex-row items-center gap-8">
         <div className="flex flex-col flex-shrink-0 items-start gap-2 bg-white py-2 pl-6 pr-14 rounded-lg">
           <p className="text-gray-500">
             Total Earnings:{" "}

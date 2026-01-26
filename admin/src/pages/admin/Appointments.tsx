@@ -86,7 +86,7 @@ const AdminAppointmentsPage = () => {
         )}
 
         {appointments?.length === 0 && !loading && (
-          <p className="py-10 text-center text-gray-400 animate-pulse">
+          <p className="py-10 text-center text-gray-400">
             Not Appointments Found
           </p>
         )}
