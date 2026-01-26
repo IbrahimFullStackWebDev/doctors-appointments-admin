@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 import { type AppContextType, type AppointmentsType } from "../types/index.ts";
 const AppContext = createContext<AppContextType | undefined>(undefined);
 

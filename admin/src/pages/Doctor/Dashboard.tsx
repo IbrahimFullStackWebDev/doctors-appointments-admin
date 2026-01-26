@@ -35,7 +35,7 @@ const DoctorDashboard = () => {
           },
         );
         if (data.success) {
-          setStatisticsInfo(data.statistics);
+          setStatisticsInfo(data.statistics as unknown as DoctorStatisticsType);
         } else {
           toast.error(data.message);
         }

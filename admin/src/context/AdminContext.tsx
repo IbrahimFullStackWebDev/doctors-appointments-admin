@@ -2,7 +2,7 @@ import {
   createContext,
   useEffect,
   useState,
-  ReactNode,
+  type ReactNode,
   useContext,
 } from "react";
 import { type AdminContextType, type ResponseType } from "../types/index.ts";
