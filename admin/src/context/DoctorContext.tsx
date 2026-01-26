@@ -20,7 +20,7 @@ export const DoctorContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { backendUrl, setAppointments } = useAppContext();
+  const { backendUrl, setAppointments, setLoading } = useAppContext();
   const [doctorInfo, setDoctorInfo] = useState<DoctorDataType | null>(
     localStorage.getItem("doctorInfo")
       ? (JSON.parse(
@@ -35,6 +35,7 @@ export const DoctorContextProvider = ({
 
   useEffect(() => {
     const getAllAppointments = async () => {
+      setLoading(true);
       try {
         const { data } = await axios.post<ResponseType>(
           `${backendUrl}/api/doctor/appointments`,
@@ -50,6 +51,8 @@ export const DoctorContextProvider = ({
         const err = error as Error;
         toast.error(err.message);
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     if (dToken) {

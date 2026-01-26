@@ -27,6 +27,8 @@ export interface AppContextType {
   backendUrl: string;
   appointments: AppointmentsType[];
   setAppointments: React.Dispatch<React.SetStateAction<AppointmentsType[]>>;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
 export interface DoctorContextType {

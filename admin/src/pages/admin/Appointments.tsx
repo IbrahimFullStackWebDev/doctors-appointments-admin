@@ -1,23 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { assets } from "../../assets/assets";
 import { calculateAge } from "../../utils/CalculateAge";
 import ConfirmMessage from "../../components/ConfirmMessage";
 import { useAppContext } from "../../context/AppContext";
 
 const AdminAppointmentsPage = () => {
-  const { currency, appointments } = useAppContext();
+  const { currency, appointments, loading } = useAppContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [message, setMessage] = useState<string>("Loading Appointments...");
-
-  useEffect(() => {
-    setTimeout(() => {
-      setMessage("Appointments Not Found");
-    }, 10000);
-  }, [appointments]);
-
   return (
-    <div className="w-full flex flex-col gap-4 items-start m-4 ooverflow-x-auto">
+    <div className="w-full flex flex-col gap-4 items-start m-4 overflow-x-auto">
       <p className="text-xl text-gray-700 font-medium">All Appointments</p>
       <div className="w-full min-w-[900px] flex flex-col items-center bg-white w-full pt-4 border border-gray-300 rounded-lg overflow-y-auto h-[400px] shadow-sm">
         <div className="grid grid-cols-[0.5fr_3fr_1fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col py-3 px-6 border-b border-gray-300 w-full text-gray-600 font-semibold">
@@ -87,11 +79,15 @@ const AdminAppointmentsPage = () => {
             </div>
           ))}
 
-        {appointments?.length === 0 && (
-          <p
-            className={`py-10 text-center text-gray-400 ${message === "Loading Appointments..." ? "animate-pulse" : " text-gray-900"}`}
-          >
-            {message}
+        {loading && (
+          <p className="py-10 text-center text-gray-400 animate-pulse">
+            Loading Appointments...
+          </p>
+        )}
+
+        {appointments?.length === 0 && !loading && (
+          <p className="py-10 text-center text-gray-400 animate-pulse">
+            Not Appointments Found
           </p>
         )}
       </div>

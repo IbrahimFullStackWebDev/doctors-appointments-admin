@@ -1,21 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { assets } from "../../assets/assets";
 import { calculateAge } from "../../utils/CalculateAge";
 import ConfirmMessage from "../../components/ConfirmMessage";
 import { useAppContext } from "../../context/AppContext";
 
 const DoctorAppointmentsPage = () => {
-  const { currency, appointments } = useAppContext();
+  const { currency, appointments, loading } = useAppContext();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [statusType, setStatusType] = useState<string>("");
-  const [message, setMessage] = useState<string>("Loading Appointments...");
-
-  useEffect(() => {
-    setTimeout(() => {
-      setMessage("Appointments Not Found");
-    }, 10000);
-  }, [appointments]);
 
   return (
     <div className="w-full flex flex-col gap-4 items-start m-4">
@@ -100,11 +93,15 @@ const DoctorAppointmentsPage = () => {
               )}
             </div>
           ))}
-        {appointments?.length === 0 && (
-          <p
-            className={`py-10 text-center text-gray-400 ${message === "Loading Appointments..." ? "animate-pulse" : " text-gray-900"}`}
-          >
-            {message}
+        {loading && (
+          <p className="py-10 text-center text-gray-400 animate-pulse">
+            Loading Appointments...
+          </p>
+        )}
+
+        {appointments?.length === 0 && !loading && (
+          <p className="py-10 text-center text-gray-400 animate-pulse">
+            Not Appointments Found
           </p>
         )}
       </div>

@@ -12,7 +12,7 @@ import { useAppContext } from "./AppContext.tsx";
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
-  const { backendUrl, setAppointments } = useAppContext();
+  const { backendUrl, setAppointments, setLoading } = useAppContext();
 
   const [aToken, setAToken] = useState<string>(
     localStorage.getItem("aToken") || "",
@@ -20,6 +20,7 @@ export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getAllAppointments = async () => {
+      setLoading(true);
       try {
         const { data } = await axios.post<ResponseType>(
           `${backendUrl}/api/admin/appointments`,
@@ -35,6 +36,8 @@ export const AdminContextProvider = ({ children }: { children: ReactNode }) => {
         const err = error as Error;
         toast.error(err.message);
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     if (aToken) {

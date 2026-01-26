@@ -6,12 +6,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const currency: string = "$";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [appointments, setAppointments] = useState<AppointmentsType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const value = {
     currency,
     backendUrl,
     appointments,
     setAppointments,
+    loading,
+    setLoading,
   } as AppContextType;
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
