@@ -142,7 +142,7 @@ const DoctorDashboard = () => {
               <div className="flex flex-row items-center gap-1">
                 <div className="p-1 bg-red-500 rounded-full"></div>
                 <p className="text-sm text-red-500">
-                  Loast Patients: {statisticsInfo?.patients.lost_patients}
+                  Lose Patients: {statisticsInfo?.patients.lost_patients}
                 </p>
               </div>
 
